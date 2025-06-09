@@ -18,6 +18,16 @@ export class EnterpriseService {
     return this.enterpriseRepository.create(createEnterpriseDto);
   
   }
+  findAll() {
+    this.logger.log('Buscando todos os dados');
+    return this.enterpriseRepository.findAll();
+  }
+
+  findOne(id: string) {
+    this.logger.log('Buscando por id: ', id);
+    return this.enterpriseRepository.findOne(id);
+  }
+
 
   
 }

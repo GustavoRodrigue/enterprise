@@ -17,5 +17,17 @@ export class EnterpriseRepository{
     return createdEnterprise.save();
   }
 
+  async findAll(): Promise<EnterpriseSchema[]>  {
+    return await this.enterpriseModel.find().exec();
+  }
+
+  async findOne(id: string): Promise<EnterpriseSchema> {
+    const enterpriseResult = await this.enterpriseModel.findOne({ _id: id }).exec();
+    if (!enterpriseResult) {
+      throw new NotFoundException(`id não encontrado no banco ${id}`);
+    }
+    return enterpriseResult;
+  }
+
 
 }
