@@ -7,7 +7,15 @@ import { UpdateEnterpriseDto } from "../dto/update-enterprise.dto";
 
 @Injectable()
 export class EnterpriseRepository{
-  
+  constructor(
+      @InjectModel(EnterpriseSchema.name) private enterpriseModel: Model<EnterpriseSchema>,
+    ){}
+
+  async create(createEnterpriseDto: CreateEnterpriseDto): Promise<EnterpriseSchema>{
+    const createdEnterprise = await new this.enterpriseModel(createEnterpriseDto);
+
+    return createdEnterprise.save();
+  }
 
 
 }
