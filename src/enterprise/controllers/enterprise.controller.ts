@@ -12,5 +12,14 @@ export class EnterpriseController {
     return this.enterpriseService.create(createEnterpriseDto);
   }
 
+  @Get()
+  findAll() {
+    return this.enterpriseService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.enterpriseService.findOne(id);
+  }
   
 }
