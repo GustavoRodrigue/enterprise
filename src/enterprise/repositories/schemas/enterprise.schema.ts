@@ -1,7 +1,9 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
 
+export type EnterpriseDocument = HydratedDocument<EnterpriseSchema>;
 
+@Schema({collection: 'enterprise', timestamps: true})
 export class EnterpriseSchema{
     
     @Prop({type: String, required: true})
