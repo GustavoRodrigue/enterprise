@@ -28,6 +28,14 @@ export class EnterpriseService {
     return this.enterpriseRepository.findOne(id);
   }
 
+  updatePatch(id: string, updateEnterpriseDto: UpdateEnterpriseDto) {
+    this.logger.log('Alterando dados', updateEnterpriseDto);
+    this.enterpriseRepository.updatePatch(id, updateEnterpriseDto);
+  }
 
-  
+  remove(id: string) {
+    this.logger.log('deletando os dados do id: ', id);
+    return this.enterpriseRepository.remove(id);
+  }
+
 }

@@ -29,5 +29,21 @@ export class EnterpriseRepository{
     return enterpriseResult;
   }
 
+  async updatePatch(id: string, updateEnterpriseDto: UpdateEnterpriseDto): Promise<EnterpriseSchema> {
+  
+    const updated = await this.enterpriseModel.findOneAndUpdate({ _id: id }, updateEnterpriseDto,{ new: true }).exec(); 
+    if (!updated) {
+      throw new NotFoundException(`falha ao atualizar o id ${id}`);
+    }
+    return updated;
+  }
+
+  async remove(id: string): Promise<EnterpriseSchema> {
+    const deleteId = await this.enterpriseModel.findOneAndDelete({_id: id}).exec();
+    if(!deleteId){
+      throw new NotFoundException(`O id não existe ${id}`);
+    }
+    return deleteId;
+  }
 
 }
