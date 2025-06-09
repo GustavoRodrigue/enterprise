@@ -7,6 +7,17 @@ import { EnterpriseRepository } from '../repositories/enterprise.repository';
 @Injectable()
 export class EnterpriseService {
  
+  constructor(
+    private readonly enterpriseRepository: EnterpriseRepository
+  ){}
+
+  private readonly logger = new Logger(EnterpriseService.name);
+
+  create(createEnterpriseDto: CreateEnterpriseDto) {
+    this.logger.log('Criando Empresa', createEnterpriseDto);
+    return this.enterpriseRepository.create(createEnterpriseDto);
   
+  }
+
   
 }
