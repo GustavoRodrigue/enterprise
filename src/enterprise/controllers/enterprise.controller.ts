@@ -5,12 +5,6 @@ import { UpdateEnterpriseDto } from '../dto/update-enterprise.dto';
 
 @Controller('enterprise')
 export class EnterpriseController {
-  constructor(private readonly enterpriseService: EnterpriseService) {}
-
-  @Post()
-  create(@Body() createEnterpriseDto: CreateEnterpriseDto) {
-    return this.enterpriseService.create(createEnterpriseDto);
-  }
-
+  
   
 }
