@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
+import { ResponsibleEnterpriseSchema, ResponsibleEnterpriseSchemaFactory } from "./responsibleEnterprise.schema";
+import { AddressEnterpriseSchemaFactory, AddressSchema } from "./address.schema";
 
 export type EnterpriseDocument = HydratedDocument<EnterpriseSchema>;
 
@@ -18,32 +20,12 @@ export class EnterpriseSchema{
     telephone: string;
     @Prop({type: String, required: true})
     descriptionService: string
-    @Prop({type: String, required: true})
 
-    nameResponsible: string
-    @Prop({type: String, required: true})
-    surnameResponsible: string;
-    @Prop({type: String, required: true})
-    emailResponsible: string;
-    @Prop({type: String, required: true})
-    telephoneResponsible: string;
-    @Prop({type: String, required: true})
+    @Prop({ type: ResponsibleEnterpriseSchemaFactory, required: true })
+    responsibleEnterprise: ResponsibleEnterpriseSchema;
     
-    zipCode: string;
-    @Prop({type: String, required: true})
-    country: string;
-    @Prop({type: String, required: true})
-    city: string;
-    @Prop({type: String, required: true})
-    state: string;
-    @Prop({type: String, required: true})
-    district: string;
-    @Prop({type: String, required: true})
-    road: string;
-    @Prop({type: String, required: true})
-    propertyNumber: number;
-    @Prop({type: String, required: true})
-    complement: string;
+    @Prop({type: AddressEnterpriseSchemaFactory, required: true})
+    address: AddressSchema;
 
 }
 
