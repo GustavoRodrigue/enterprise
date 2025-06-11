@@ -28,9 +28,9 @@ export class EnterpriseService {
     return this.enterpriseRepository.findOne(id);
   }
 
-  updatePatch(id: string, updateEnterpriseDto: UpdateEnterpriseDto) {
+  update(id: string, updateEnterpriseDto: UpdateEnterpriseDto) {
     this.logger.log('Alterando dados', updateEnterpriseDto);
-    this.enterpriseRepository.updatePatch(id, updateEnterpriseDto);
+    return this.enterpriseRepository.update(id, updateEnterpriseDto);
   }
 
   remove(id: string) {
