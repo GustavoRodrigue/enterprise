@@ -1,15 +1,18 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { EnterpriseSchema } from "./schemas/enterprise.schema";
 import { Model } from "mongoose";
 import { CreateEnterpriseDto } from "../dto/create-enterprise.dto";
 import { UpdateEnterpriseDto } from "../dto/update-enterprise.dto";
+import { MensageEnterpriseDto } from "../dto/mensage-enterprise.dto";
 
 @Injectable()
 export class EnterpriseRepository{
   constructor(
       @InjectModel(EnterpriseSchema.name) private enterpriseModel: Model<EnterpriseSchema>,
     ){}
+
+    private mensageDTO = new MensageEnterpriseDto();
 
   async create(createEnterpriseDto: CreateEnterpriseDto): Promise<EnterpriseSchema>{
     const createdEnterprise = await new this.enterpriseModel(createEnterpriseDto);
@@ -29,21 +32,35 @@ export class EnterpriseRepository{
     return enterpriseResult;
   }
 
-  async updatePatch(id: string, updateEnterpriseDto: UpdateEnterpriseDto): Promise<EnterpriseSchema> {
-  
-    const updated = await this.enterpriseModel.findOneAndUpdate({ _id: id }, updateEnterpriseDto,{ new: true }).exec(); 
-    if (!updated) {
-      throw new NotFoundException(`falha ao atualizar o id ${id}`);
+  async update(id: string, updateEnterpriseDto: UpdateEnterpriseDto) {
+     if(!id){
+      throw new BadRequestException(`O id não foi informado`);
     }
-    return updated;
-  }
-
-  async remove(id: string): Promise<EnterpriseSchema> {
-    const deleteId = await this.enterpriseModel.findOneAndDelete({_id: id}).exec();
-    if(!deleteId){
+    const enterpriseId = await this.enterpriseModel.findOne({ _id: id }).exec();
+    if (!enterpriseId) {
       throw new NotFoundException(`O id não existe ${id}`);
     }
-    return deleteId;
+
+    await this.enterpriseModel.updateOne({ _id: id }, updateEnterpriseDto).exec(); 
+   
+    this.mensageDTO.mensage = 'Empresa atualizada com sucesso!';
+    return this.mensageDTO;
+  }
+
+  async remove(id: string){
+    if(!id){
+      throw new BadRequestException(`O id não foi informado`);
+    }
+    const enterpriseId = await this.enterpriseModel.findOne({ _id: id }).exec();
+    if (!enterpriseId) {
+      throw new NotFoundException(`O id não existe ${id}`);
+    }
+    await this.enterpriseModel.deleteOne({_id: id}).exec();
+
+    this.mensageDTO.mensage = 'Empresa deletada com sucesso!';
+
+    return this.mensageDTO;
+  
   }
 
 }

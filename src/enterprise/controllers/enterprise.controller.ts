@@ -22,9 +22,9 @@ export class EnterpriseController {
     return this.enterpriseService.findOne(id);
   }
 
-  @Patch(':id')
-  updatePatch(@Param('id') id: string, @Body() updateEnterpriseDto: UpdateEnterpriseDto) {
-    return this.enterpriseService.updatePatch(id, updateEnterpriseDto);
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateEnterpriseDto: UpdateEnterpriseDto) {
+    return this.enterpriseService.update(id, updateEnterpriseDto);
   }
 
   @Delete(':id')
