@@ -1,0 +1,27 @@
+services:
+  mongodb:
+    image: mongo:6
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/data/db
+    command: ["mongod", "--noauth"]
+    networks:
+      - net-enterprise
+    
+  app:
+    build: .
+    container_name: app-enterprise
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/enterprise
+    depends_on:
+      - mongodb
+    networks:
+      - net-enterprise
+networks:
+  net-enterprise:
+    driver: bridge

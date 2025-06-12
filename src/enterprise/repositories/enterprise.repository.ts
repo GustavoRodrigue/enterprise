@@ -12,7 +12,7 @@ export class EnterpriseRepository{
       @InjectModel(EnterpriseSchema.name) private enterpriseModel: Model<EnterpriseSchema>,
     ){}
 
-    private mensageDTO = new MensageEnterpriseDto();
+  private mensageDTO = new MensageEnterpriseDto();
 
   async create(createEnterpriseDto: CreateEnterpriseDto): Promise<EnterpriseSchema>{
     const createdEnterprise = await new this.enterpriseModel(createEnterpriseDto);
